@@ -27,8 +27,27 @@ export function AuthProvider({ children }) {
     }
   }
   // TODO: authenticate
+  async function authenthicate() {
+    if (!token) {
+      throw Error("you must be signed in");
+    }
+    try {
+      const response = await fetch(API + "authenticate", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const result = await response.json();
+      setUser(result.data);
+      setLocation("TUNNEL");
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
-  const value = { location, signUp };
+  const value = { location, signUp, token, authenthicate };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
