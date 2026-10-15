@@ -18,8 +18,8 @@ export default function Entrance() {
       </p>
       <form
         action={(formData) => {
-          const name = formData.get("name");
-          signUp(name);
+          const username = formData.get("name");
+          signUp({ username });
         }}
       >
         <label>

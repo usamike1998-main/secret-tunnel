@@ -20,19 +20,19 @@ export function AuthProvider({ children }) {
         body: JSON.stringify(userCredentials),
       });
       const result = await response.json();
-      setToken(result.data.token);
+      setToken(result.token);
       setLocation("TABLET");
     } catch (e) {
       console.error(e);
     }
   }
   // TODO: authenticate
-  async function authenthicate() {
+  async function authenticate() {
     if (!token) {
       throw Error("you must be signed in");
     }
     try {
-      const response = await fetch(API + "authenticate", {
+      const response = await fetch(API + "/authenticate", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -47,7 +47,7 @@ export function AuthProvider({ children }) {
     }
   }
 
-  const value = { location, signUp, token, authenthicate };
+  const value = { location, signUp, token, authenticate };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
